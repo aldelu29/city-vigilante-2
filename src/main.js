@@ -13,6 +13,7 @@ function switchScreen(screen) {
   if (screen === "game") {
     World.generate();
     Player.reset();
+    Player.loadSprite();
   }
 }
 
