@@ -1,0 +1,1 @@
+// Handles all localStorage saving and loading of progress

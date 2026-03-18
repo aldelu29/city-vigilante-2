@@ -1,0 +1,1 @@
+// Character data — stats, abilities, sprite info for all playable characters
