@@ -30,6 +30,8 @@ const Player = {
   frameInterval: 4,
   isAttacking: false,
   isDead: false,
+  health: 100,
+  maxHealth: 100,
 
   loadSprite() {
     this.spritesheet = new Image();
@@ -47,6 +49,9 @@ const Player = {
     this.frameTimer = 0;
     this.isAttacking = false;
     this.isDead = false;
+
+    this.health = 100;
+    this.maxHealth = 100;
   },
 
   setAnim(name) {
