@@ -13,12 +13,12 @@ const Player = {
   color: "#ff8800",
 
   spritesheet: null,
-  frameWidth: 120,
+  frameWidth: 80,
   frameHeight: 80,
   scale: 1.5,
 
   animations: {
-    idle:   { row: 0, frames: 8 },
+    idle:   { row: 0, frames: 4 },
     attack: { row: 1, frames: 8 },
     hit:    { row: 2, frames: 2 },
     death:  { row: 3, frames: 8 }
@@ -27,7 +27,7 @@ const Player = {
   currentAnim: "idle",
   currentFrame: 0,
   frameTimer: 0,
-  frameInterval: 5,
+  frameInterval: 4,
   isAttacking: false,
   isDead: false,
 
