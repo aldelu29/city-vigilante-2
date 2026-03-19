@@ -6,12 +6,34 @@ const Combat = {
   lastAttackTime: 0,
   attackCooldown: 400,
 
+  combo: 0,
+  comboTimer: 0,
+  comboDuration: 180,
+  score: 0,
+
+  reset() {
+    this.combo = 0;
+    this.comboTimer = 0;
+    this.score = 0;
+  },
+
+  update() {
+    if (this.comboTimer > 0) {
+      this.comboTimer--;
+      if (this.comboTimer <= 0) {
+        this.combo = 0;
+      }
+    }
+  },
+
   playerAttack() {
     const now = Date.now();
     if (now - this.lastAttackTime < this.attackCooldown) return;
     this.lastAttackTime = now;
 
     Player.attack();
+
+    let hitSomething = false;
 
     Enemies.list.forEach(enemy => {
       if (!enemy.alive) return;
@@ -25,6 +47,9 @@ const Combat = {
         enemy.knockbackX = Math.sign(dx) * this.knockbackForce;
         enemy.velY = this.knockbackUp;
         enemy.isAggro = true;
+        hitSomething = true;
+
+        Camera.shake(6);
 
         Particles.burst(
           enemy.x + enemy.width / 2,
@@ -35,11 +60,18 @@ const Combat = {
 
         if (enemy.health <= 0) {
           enemy.alive = false;
+          this.combo++;
+          this.comboTimer = this.comboDuration;
+          const points = 100 * Math.max(1, this.combo);
+          this.score += points;
+
+          Camera.shake(12);
+
           Particles.burst(
             enemy.x + enemy.width / 2,
             enemy.y + enemy.height / 2,
             "#ff4466",
-            16
+            20
           );
         }
       }
@@ -60,6 +92,7 @@ const Combat = {
         Player.health -= 10;
         Player.velY = -6;
         Player.velX = -Math.sign(dx) * 6;
+        Camera.shake(8);
 
         if (Player.health <= 0) {
           Player.health = 0;
